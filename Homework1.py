@@ -1,7 +1,7 @@
 """
-Jxkang
+Author: Jxkang
 12/30/19
-Project requirement:
+Requirement:
 Receive a string of HTML codes and match starting tags with ending tags return as boolean
 if starting tag match with ending tags return True otherwise False
 """
