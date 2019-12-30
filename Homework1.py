@@ -1,7 +1,6 @@
 """
 Jxkang
 12/30/19
-
 Project requirement:
 Receive a string of HTML codes and match starting tags with ending tags return as boolean
 if starting tag match with ending tags return True otherwise False
@@ -16,7 +15,6 @@ html_content = """
     <title>Title</title>
 </head>
 <body>
-
     <h1>Hello World</h1>
 </body>
 </html>
@@ -51,18 +49,14 @@ def check_html_match(string_of_html):
                 tags_char_location = 1
 
                 # Push all ending tags into end_tags_stack
-                while string_of_html[next_token_location + tags_char_location] != '>':     
+                while string_of_html[next_token_location + tags_char_location] != '>':
                     end_tags_stack.push(string_of_html[next_token_location + tags_char_location])
                     tags_char_location += 1
 
                 # For each time we finished with inserting single end tags compare with start tags
                 while not end_tags_stack.is_empty():
-                    
-                    if start_tags_stack.peek() == end_tags_stack.peek():
-                        start_tags_stack.pop()
-                        end_tags_stack.pop()
 
-                    else:
+                    if start_tags_stack.pop() != end_tags_stack.pop():
                         return False
 
             elif string_of_html[next_token_location] == '!':
@@ -81,6 +75,3 @@ def check_html_match(string_of_html):
 
 
 print(check_html_match(html_content2))
-
-
-
