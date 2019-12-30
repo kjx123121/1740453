@@ -36,28 +36,29 @@ html_content2 = """
 """
 
 
-def check_html_match(html_input_content):
+def check_html_match(string_of_html):
     next_token_location = 0
     start_tags_stack = Stack()
     end_tags_stack = Stack()
 
-# Read token from string of HTML find all '<' since all tags start with '<'
-    for token in html_input_content:
+    # Read token from string of HTML find all '<' since all tags start with '<'
+    for token in string_of_html:
         next_token_location += 1
 
         if token == '<':
 
             # If there is '/' which means this is a ending tags
-            if html_input_content[next_token_location] == '/':
+            if string_of_html[next_token_location] == '/':
                 tags_char_location = 1
 
                 # Push all ending tags into end_tags_stack
-                while html_input_content[next_token_location + tags_char_location] != '>':
-                    end_tags_stack.push(html_input_content[next_token_location + tags_char_location])
+                while string_of_html[next_token_location + tags_char_location] != '>':     
+                    end_tags_stack.push(string_of_html[next_token_location + tags_char_location])
                     tags_char_location += 1
 
                 # For each time we finished with inserting single end tags compare with start tags
                 while not end_tags_stack.is_empty():
+                    
                     if start_tags_stack.peek() == end_tags_stack.peek():
                         start_tags_stack.pop()
                         end_tags_stack.pop()
@@ -65,16 +66,16 @@ def check_html_match(html_input_content):
                     else:
                         return False
 
-            elif html_input_content[next_token_location] == '!':
+            elif string_of_html[next_token_location] == '!':
                 continue
 
             # Push all starting tags into start_tags_stack
             else:
                 tags_char_location = 0
 
-                while html_input_content[next_token_location + tags_char_location] != ' ' \
-                        and html_input_content[next_token_location + tags_char_location] != '>':
-                    start_tags_stack.push(html_input_content[next_token_location + tags_char_location])
+                while string_of_html[next_token_location + tags_char_location] != ' ' \
+                        and string_of_html[next_token_location + tags_char_location] != '>':
+                    start_tags_stack.push(string_of_html[next_token_location + tags_char_location])
                     tags_char_location += 1
 
     return start_tags_stack.is_empty()
