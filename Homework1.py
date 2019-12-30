@@ -46,11 +46,11 @@ def check_html_match(string_of_html):
 
             # If there is '/' which means this is a ending tags
             if string_of_html[next_token_location] == '/':
-                tags_char_location = 1
+                tags_char_location = 1 + next_token_location
 
                 # Push all ending tags into end_tags_stack
-                while string_of_html[next_token_location + tags_char_location] != '>':
-                    end_tags_stack.push(string_of_html[next_token_location + tags_char_location])
+                while string_of_html[tags_char_location] != '>':
+                    end_tags_stack.push(string_of_html[tags_char_location])
                     tags_char_location += 1
 
                 # For each time we finished with inserting single end tags compare with start tags
@@ -64,11 +64,11 @@ def check_html_match(string_of_html):
 
             # Push all starting tags into start_tags_stack
             else:
-                tags_char_location = 0
+                tags_char_location = next_token_location
 
-                while string_of_html[next_token_location + tags_char_location] != ' ' \
-                        and string_of_html[next_token_location + tags_char_location] != '>':
-                    start_tags_stack.push(string_of_html[next_token_location + tags_char_location])
+                while string_of_html[tags_char_location] != ' ' \
+                        and string_of_html[tags_char_location] != '>':
+                    start_tags_stack.push(string_of_html[tags_char_location])
                     tags_char_location += 1
 
     return start_tags_stack.is_empty()
