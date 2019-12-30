@@ -5,8 +5,6 @@ Jxkang
 Project requirement:
 Receive a string of HTML codes and match starting tags with ending tags return as boolean
 if starting tag match with ending tags return True otherwise False
-
-If necessary download https://github.com/kjx123121/1740453/blob/master/listRearRepresentStackTop.py
 """
 
 from listRearRepresentStackTop import Stack
