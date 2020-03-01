@@ -21,17 +21,13 @@ var adultEnergy map[int]map[string][2]float64 = map[int]map[string][2]float64{
 
 func main() {
 
-	fmt.Print("请输入身高(cm) : ")
-	height := stdinFloat()
 
-	fmt.Print("请输入体重(kg) : ")
-	weight := stdinFloat()
+	height := getHeight()
+	weight := getWeight()
+	exercise := getExercise()
+	diet := getDiet()
 
-	fmt.Print("活动强度用 1 - 4 来表示 (轻体力劳动 -- 重体力劳动) : ")
-	exercise := stdinInt()
 
-	fmt.Print("是否断用主食(1:是 2:否) : ")
-	diet := stdinBoolean()
 
 	bmi := calculation.CalculateBMI(height, weight)
 	fmt.Printf("您的BMI为: %0.1f\n", bmi)
@@ -83,4 +79,55 @@ func stdinBoolean() bool {
 }
 
 
-
+func getHeight() float64{
+	var height float64
+	for {
+		fmt.Print("请输入身高(cm) : ")
+		height = stdinFloat()
+		if height > 0 {
+			break
+		}else {
+			fmt.Printf("请输入正确的身高\n")
+		}
+	}
+	return height
+}
+func getWeight() float64{
+	var weight float64
+	for {
+		fmt.Print("请输入体重(kg) : ")
+		weight = stdinFloat()
+		if weight > 0 {
+			break
+		}else {
+			fmt.Printf("请输入正确的体重\n")
+		}
+	}
+	return weight
+}
+func getExercise() int{
+	var exercise int
+	for {
+		fmt.Print("活动强度用 1 - 4 来表示 (轻体力劳动 -- 重体力劳动) : ")
+		exercise = stdinInt()
+		if exercise == 1 || exercise == 2 || exercise == 3 || exercise == 4{
+			break
+		}else {
+			fmt.Printf("请仅使用1 - 4 来表示\n")
+		}
+	}
+	return exercise
+}
+func getDiet() bool{
+	var diet bool
+	for {
+		fmt.Print("是否断用主食(t:是 f:否) : ")
+		diet = stdinBoolean()
+		if diet == true || diet == false {
+			break
+		}else {
+			fmt.Printf("请使用 't' 或 'f' 来回答\n")
+		}
+	}
+	return diet
+}
