@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Assignment/BMI/calculation"
 	"fmt"
 	"math"
 )
@@ -32,93 +33,54 @@ func main() {
 	fmt.Print("是否断用主食(1:是 2:否) : ")
 	diet := stdinBoolean()
 
-	bmi := calculateBMI(height, weight)
+	bmi := calculation.CalculateBMI(height, weight)
 	fmt.Printf("您的BMI为: %0.1f\n", bmi)
 
-	shape := findBodyShape(bmi, bodyShape)
+	shape := calculation.FindBodyShape(bmi, bodyShape)
 	fmt.Printf("属于%s体型\n", shape)
 
-	minEnergy, maxEnergy := calculateEnergy(weight, adultEnergy, shape, exercise)
+	minEnergy, maxEnergy := calculation.CalculateEnergy(weight, adultEnergy, shape, exercise)
 	fmt.Printf("每日摄取热量范围为: %0.2f--%0.2f(kJ)\n", minEnergy, maxEnergy)
 
-	minProtein, maxProtein := calculateProtein(diet, weight)
+	minProtein, maxProtein := calculation.CalculateProtein(diet, weight)
 	fmt.Printf("每日摄取蛋白质范围为: %0.2f--%0.2f(g)\n", minProtein, maxProtein)
 
 }
 
 func stdinInt() int {
-	var i int
-	_, err := fmt.Scanf("%d", &i)
+	var intReceiver int
+	_, err := fmt.Scanf("%d", &intReceiver)
 
 	if err != nil {
 		fmt.Println(err)
 
 	}
-	return i
+	return intReceiver
 }
 
 func stdinFloat() float64 {
-	var f float64
+	var floatReceiver float64
 
-	_, err := fmt.Scanf("%f", &f)
+	_, err := fmt.Scanf("%f", &floatReceiver)
 
 	if err != nil {
 		fmt.Println(err)
 
 	}
-	return f
+	return floatReceiver
 }
 
 func stdinBoolean() bool {
-	var b bool
+	var booleanReceiver bool
 
-	_, err := fmt.Scanf("%t", &b)
+	_, err := fmt.Scanf("%t", &booleanReceiver)
 
 	if err != nil {
 		fmt.Println(err)
 
 	}
-	return b
+	return booleanReceiver
 }
 
-func calculateBMI(height, weight float64) float64 {
-	bmi := weight / math.Pow(height/100, 2)
-	return math.Round(bmi*10) / 10
-}
 
-func findBodyShape(bmi float64, bodyShape map[string][2]float64) string {
-	var shape string
 
-	for k, v := range bodyShape {
-
-		if bmi > v[0] && bmi < v[1] {
-			shape = k
-		}
-	}
-
-	return shape
-}
-
-func calculateEnergy(weight float64, adultEnergy map[int]map[string][2]float64, shape string, exercise int) (float64, float64) {
-	var minimumEnergy, maximumEnergy float64
-
-	minimumEnergy = weight * 0.7 * adultEnergy[exercise][shape][0]
-	maximumEnergy = weight * 0.7 * adultEnergy[exercise][shape][1]
-
-	return math.Round(minimumEnergy*100) / 100, math.Round(maximumEnergy*100) / 100
-}
-
-func calculateProtein(diet bool, weight float64) (float64, float64) {
-	var minimumProtein, maximumProtein float64
-
-	if diet {
-		minimumProtein = weight * 1.2
-		maximumProtein = weight * 1.5
-
-	} else {
-		minimumProtein = weight * 1
-		maximumProtein = weight * 1.2
-	}
-
-	return math.Round(minimumProtein*100) / 100, math.Round(maximumProtein*100) / 100
-}
