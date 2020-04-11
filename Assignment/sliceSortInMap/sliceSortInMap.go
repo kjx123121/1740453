@@ -58,10 +58,11 @@ func ParseIni(receivedData []string) map[string]map[string]string {
 
 		} else {
 			insertToInterMap(dataLine, interMap)
-			outerMap["[Global]"] = interMap
+
 		}
 
 	}
+	outerMap["[Global]"] = interMap
 
 	return outerMap
 }
